@@ -1,28 +1,61 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import { Container, Row, Col } from 'reactstrap'
+import SubjectPicker from './components/SubjectPicker'
+import BooksList from './components/BooksList'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+const App = () => {
+  const [subject, setSubject] = useState('Fiction')
+  const [books, setBooks] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+
+  const subjectHandler = event => {
+    setSubject(event.target.value)
   }
+
+  const fetchSubject = chosenSubject => {
+    fetch(`http://localhost:3010/books?subjects_like=${chosenSubject}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch.')
+
+        return res.json()
+      })
+      .then(data => {
+        setIsLoading(false)
+        setBooks(data)
+      })
+  }
+
+  useEffect(() => {
+    setIsLoading(true)
+    fetchSubject(subject)
+  }, subject)
+
+  const content = (
+    <Container>
+      <h1 className='text-center'>The BookApp</h1>
+      <Row>
+        <Col md='3'>
+          <SubjectPicker
+            onSubjectSelect={subjectHandler}
+            selectedSubject={subject}
+          />
+        </Col>
+      </Row>
+      <br />
+      <Row>
+        <Col>
+          <BooksList
+            updateTable={() => {
+              fetchSubject(subject)
+            }}
+            books={books}
+            isLoading={isLoading}
+          />
+        </Col>
+      </Row>
+    </Container>
+  )
+  return content
 }
 
-export default App;
+export default App
