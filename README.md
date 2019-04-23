@@ -12,4 +12,4 @@ Client folder is a create-react-app frontend project
 
 while Server folder is the adaptdk's json-server
 
-navigate to both and npm install them, followed by npm start at the react project
+navigate to both and npm install them, followed by npm start at both
