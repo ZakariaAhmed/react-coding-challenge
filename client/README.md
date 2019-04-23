@@ -16,8 +16,24 @@ user will choose a subject from the component subjectpicker
 
 bookslist is the table to display all the books with an action edit, its child component is the bookform, which displays and edits the book's author and title
 
+### Organizing my code
+
+This was a big topic, on our last meeting, and key focus on the new test.
+I have since the last meeting
+chosen to include ESLint and Prettier with airbnb style guide into my project.
+
+My project now includes .eslintrc.json and .prettierrc.json
+
+source:
+https://github.com/airbnb/javascript
+
 #### What could I have done better?
 
-Use more CSS, to design it better, manage my state, in state management
+Use more CSS, to design it better.
+(there is a lot more to learn here for me)
+
+manage my state, in state management
 
 (redux ? or the new reducer hook, I haven't been able to catch up on all the new hooks just the state and effect so far)
+
+I used callbacks on parent components to update the table following a save on the book, this could have been avoided if I was using a state management.
